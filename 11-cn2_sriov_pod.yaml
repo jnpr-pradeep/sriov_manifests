@@ -1,0 +1,37 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mynad-sriov-pod-5
+  annotations:
+    k8s.v1.cni.cncf.io/networks: sriov-net1, nasa-nad1
+spec:
+  containers:
+  - name:  mynad-sriov-pod-5
+    image: centos/tools 
+    imagePullPolicy: IfNotPresent
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 300000; done;" ]
+    resources:
+      requests:
+        intel.com/intel_sriov_netdevice: '1'
+      limits:
+        intel.com/intel_sriov_netdevice: '1'
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mynad-sriov-pod-6
+  annotations:
+    k8s.v1.cni.cncf.io/networks: sriov-net1, nasa-nad1
+spec:
+  containers:
+  - name:  mynad-sriov-pod-6
+    image: centos/tools
+    imagePullPolicy: IfNotPresent
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 300000; done;" ]
+    resources:
+      requests:
+        intel.com/intel_sriov_netdevice: '1'
+      limits:
+        intel.com/intel_sriov_netdevice: '1'
