@@ -1,0 +1,48 @@
+Check this commands, will help
+
+To check the driver type for a particular interface:
+
+[root@test-kvm ~]# ethtool -i eno2
+driver: i40e
+version: 2.8.20-k
+firmware-version: 3.33 0x80000e48 1.1876.0
+expansion-rom-version:
+bus-info: 0000:1c:00.1
+supports-statistics: yes
+supports-test: yes
+supports-eeprom-access: yes
+supports-register-dump: yes
+supports-priv-flags: yes
+
+To check all the details of the device (interface) information
+
+[root@test-kvm ~]# lspci -s 1c:00.1 -v
+
+1c:00.1 Ethernet controller: Intel Corporation Ethernet Connection X722 for 1GbE (rev 09)
+	Subsystem: Super Micro Computer Inc Device 37d1
+	Flags: bus master, fast devsel, latency 0, IRQ 47, NUMA node 0
+	Memory at a8000000 (64-bit, prefetchable) [size=16M]
+	Memory at aa800000 (64-bit, prefetchable) [size=32K]
+	Expansion ROM at aad00000 [disabled] [size=512K]
+	Capabilities: [40] Power Management version 3
+	Capabilities: [50] MSI: Enable- Count=1/1 Maskable+ 64bit+
+	Capabilities: [70] MSI-X: Enable+ Count=129 Masked-
+	Capabilities: [a0] Express Endpoint, MSI 00
+	Capabilities: [e0] Vital Product Data
+	Capabilities: [100] Advanced Error Reporting
+	Capabilities: [140] Device Serial Number e8-44-02-ff-ff-ef-ec-3c
+	Capabilities: [150] Alternative Routing-ID Interpretation (ARI)
+	Capabilities: [160] Single Root I/O Virtualization (SR-IOV)
+	Capabilities: [1a0] Transaction Processing Hints
+	Capabilities: [1b0] Access Control Services
+	Kernel driver in use: i40e
+	Kernel modules: i40e
+
+[root@test-kvm ~]# echo 8 > /sys/class/net/eno2/device/sriov_numvfs
+
+To persist the same post restart:
+# chmod +x /etc/rc.d/rc.local
+# echo "echo 7 > /sys/class/net/enp4s0f1/device/sriov_numvfs" >> /etc/rc.local
+
+To see the interface with VF (Virtual Funtions) used and free etc.
+[root@test-kvm ~]# ip l 
